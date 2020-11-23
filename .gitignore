@@ -1,0 +1,9 @@
+*.rpyc
+
+log.txt
+errors.txt
+traceback.txt
+saves
+tmp
+cache
+tl
