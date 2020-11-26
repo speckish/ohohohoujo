@@ -61,6 +61,23 @@ image speech_bubble_90:
     # crop (as rotation increased the size)
     crop (0, 0, 135, 130)
 
+image thought_bubble_90:
+    contains:
+        "images/thought_bubble.png"
+        rotate_pad False
+        transform_anchor True
+        anchor (0.0, 1.0)
+        rotate 90.0
+    crop (0, 0, 135, 130)
+
+image spooky_speech_bubble_90:
+    contains:
+        "images/spooky_speech_bubble.png"
+        rotate_pad False
+        transform_anchor True
+        anchor (0.0, 1.0)
+        rotate 90.0
+    crop (0, 0, 135, 130)
 
 # Styles for the different frames
 # Each direction the tail points uses different values so has its own style
@@ -205,8 +222,94 @@ style bubble_speech_rightbase_frame:
 # Just one to test we can pass (show_type="bubble_thought") and have it
 # pick up a different style
 style bubble_thought_baseright_frame is bubble_speech_baseright_frame:
-    alt "Thinking"
+    background Frame(
+        "images/thought_bubble.png",
+        left = Borders(32, 33, 88, 80)
+        )
+        alt "Thinking"
+style bubble_thought_baseleft_frame is bubble_speech_baseleft_frame:
+    background Frame(
+        Transform("images/thought_bubble.png", xzoom=-1),
+        left = Borders(88, 33, 32, 80)
+        )
+        alt "Thinking"
+style bubble_thought_topright_frame is bubble_speech_topright_frame:
+    background Frame(
+        Transform("images/thought_bubble.png", yzoom=-1),
+        left = Borders(32, 80, 88, 33)
+        )
+        alt "Thinking"
+style bubble_thought_topleft_frame is bubble_speech_topleft_frame:
+    background Frame(
+        Transform("images/thought_bubble.png", zoom=-1),
+        left = Borders(88, 80, 32, 33)
+        )
+        alt "Thinking"
+style bubble_thought_leftbase_frame is bubble_speech_leftbase_frame:
+    background Frame(
+        "thought_bubble_90",
+        left = Borders(80, 32, 33, 88)
+        )
+        alt "Thinking"
+style bubble_thought_lefttop_frame is bubble_speech_lefttop_frame:
+    background Frame(
+        Transform("thought_bubble_90", yzoom=-1),
+        left = Borders(80, 88, 33, 32)
+        )
+        alt "Thinking"
+style bubble_thought_righttop_frame is bubble_speech_righttop_frame:
+    background Frame(
+        Transform("thought_bubble_90", zoom=-1),
+        left = Borders(33, 88, 80, 32)
+        )
+        alt "Thinking"
+style bubble_thought_rightbase_frame is bubble_speech_rightbase_frame:
+    background Frame(
+        Transform("thought_bubble_90", xzoom=-1),
+        left = Borders(33, 32, 80, 88)
+        )
+        alt "Thinking"
 
+style bubble_spooky_baseright_frame is bubble_speech_baseright_frame:
+    padding (48, 44, 46, 146)
+    background Frame(
+        "images/spooky_speech_bubble.png"
+        )
+style bubble_spooky_baseleft_frame is bubble_speech_baseleft_frame:
+    padding (46, 44, 48, 146)
+    background Frame(
+        Transform("images/spooky_speech_bubble.png", xzoom=-1)
+        )
+style bubble_spooky_topright_frame is bubble_speech_topright_frame:
+    padding (48, 146, 46, 44)
+    background Frame(
+        Transform("images/spooky_speech_bubble.png", yzoom=-1)
+        )
+style bubble_spooky_topleft_frame is bubble_speech_topleft_frame:
+    padding (46, 146, 48, 44)
+    background Frame(
+        Transform("images/spooky_speech_bubble.png", zoom=-1)
+        )
+style bubble_spooky_leftbase_frame is bubble_speech_leftbase_frame:
+    padding (146, 48, 44, 46)
+    background Frame(
+        "spooky_speech_bubble_90"
+        )
+style bubble_spooky_lefttop_frame is bubble_speech_lefttop_frame:
+    padding (146, 46, 44, 48)
+    background Frame(
+        Transform("spooky_speech_bubble_90", yzoom=-1)
+        )
+style bubble_spooky_righttop_frame is bubble_speech_righttop_frame:
+    padding (44, 46, 146, 48)
+    background Frame(
+        Transform("spooky_speech_bubble_90", zoom=-1)
+        )
+style bubble_spooky_rightbase_frame is bubble_speech_rightbase_frame:
+    padding (44, 48, 146, 46)
+    background Frame(
+        Transform("spooky_speech_bubble_90", xzoom=-1)
+        )
 
 
                             ####################
@@ -484,6 +587,17 @@ label speech_bubble_example:
 
     speech_bubble_a "... and back to the game" (
         640, 320, show_type="bubble_thought")
+
+    # Testing different styles.
+    speech_bubble_k """A few lines showing the
+    speech bubble system in action...""" (950, 224, "righttop", show_type="bubble_thought", show_retain=3)
+
+    speech_bubble_a "Style default (baseright)
+    \nYou can press Alt+C to show the used pos" (950, 224, show_xmax=500, what_color="#888", show_type="bubble_thought", show_retain=2)
+
+    speech_bubble_a "Style leftbase" (311, 330, "leftbase", show_type="bubble_spooky", show_retain=1)
+
+    speech_bubble_k "This one looks weirddd." (311, 380, "lefttop", show_type="bubble_spooky", show_retain=0)
 
     window show
     "But little did they know...."
