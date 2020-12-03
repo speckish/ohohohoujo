@@ -79,6 +79,42 @@ image spooky_speech_bubble_90:
         rotate 90.0
     crop (0, 0, 135, 130)
 
+image exclaim_bubble_90:
+    contains:
+        "images/exclaim_bubble.png"
+        rotate_pad False
+        transform_anchor True
+        anchor (0.0, 1.0)
+        rotate 90.0
+    crop (0, 0, 135, 130)
+
+image flash_bubble_90:
+    contains:
+        "images/flash_bubble.png"
+        rotate_pad False
+        transform_anchor True
+        anchor (0.0, 1.0)
+        rotate 90.0
+    crop (0, 0, 135, 130)
+
+image narration_bubble_90:
+    contains:
+        "images/narration_bubble.png"
+        rotate_pad False
+        transform_anchor True
+        anchor (0.0, 1.0)
+        rotate 90.0
+    crop (0, 0, 135, 130)
+
+image notail_bubble_90:
+    contains:
+        "images/notail_bubble.png"
+        rotate_pad False
+        transform_anchor True
+        anchor (0.0, 1.0)
+        rotate 90.0
+    crop (0, 0, 135, 130)
+
 # Styles for the different frames
 # Each direction the tail points uses different values so has its own style
 
@@ -311,6 +347,177 @@ style bubble_spooky_rightbase_frame is bubble_speech_rightbase_frame:
         Transform("spooky_speech_bubble_90", xzoom=-1)
         )
 
+style bubble_exclaim_baseright_frame is bubble_speech_baseright_frame:
+    padding (48, 44, 46, 146)
+    background Frame(
+        "images/exclaim_bubble.png",
+        )
+style bubble_exclaim_baseleft_frame is bubble_speech_baseleft_frame:
+    padding (46, 44, 48, 146)
+    background Frame(
+        Transform("images/exclaim_bubble.png", xzoom=-1),
+        )
+style bubble_exclaim_topright_frame is bubble_speech_topright_frame:
+    padding (48, 146, 46, 44)
+    background Frame(
+        Transform("images/exclaim_bubble.png", yzoom=-1),
+        )
+style bubble_exclaim_topleft_frame is bubble_speech_topleft_frame:
+    padding (46, 146, 48, 44)
+    background Frame(
+        Transform("images/exclaim_bubble.png", zoom=-1),
+        )
+style bubble_exclaim_leftbase_frame is bubble_speech_leftbase_frame:
+    padding (146, 48, 44, 46)
+    background Frame(
+        "exclaim_bubble_90",
+        )
+style bubble_exclaim_lefttop_frame is bubble_speech_lefttop_frame:
+    padding (146, 46, 44, 48)
+    background Frame(
+        Transform("exclaim_bubble_90", yzoom=-1),
+        )
+style bubble_exclaim_righttop_frame is bubble_speech_righttop_frame:
+    padding (44, 46, 146, 48)
+    background Frame(
+        Transform("exclaim_bubble_90", zoom=-1),
+        )
+style bubble_exclaim_rightbase_frame is bubble_speech_rightbase_frame:
+    padding (44, 48, 146, 46)
+    background Frame(
+        Transform("exclaim_bubble_90", xzoom=-1),
+        )
+
+style bubble_flash_baseright_frame is bubble_speech_baseright_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        "images/flash_bubble.png",
+        )
+style bubble_flash_baseleft_frame is bubble_speech_baseleft_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        Transform("images/flash_bubble.png", xzoom=-1),
+        )
+style bubble_flash_topright_frame is bubble_speech_topright_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        Transform("images/flash_bubble.png", yzoom=-1),
+        )
+style bubble_flash_topleft_frame is bubble_speech_topleft_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        Transform("images/flash_bubble.png", zoom=-1),
+        )
+style bubble_flash_leftbase_frame is bubble_speech_leftbase_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        "flash_bubble_90",
+        )
+style bubble_flash_lefttop_frame is bubble_speech_lefttop_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        Transform("flash_bubble_90", yzoom=-1),
+        )
+style bubble_flash_righttop_frame is bubble_speech_righttop_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        Transform("flash_bubble_90", zoom=-1),
+        )
+style bubble_flash_rightbase_frame is bubble_speech_rightbase_frame:
+    padding (100, 80, 100, 80)
+    background Frame(
+        Transform("flash_bubble_90", xzoom=-1),
+        )
+
+style bubble_narration_baseright_frame is bubble_speech_baseright_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        "images/narration_bubble.png",
+        )
+style bubble_narration_baseleft_frame is bubble_speech_baseleft_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        Transform("images/narration_bubble.png", xzoom=-1),
+        )
+style bubble_narration_topright_frame is bubble_speech_topright_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        Transform("images/narration_bubble.png", yzoom=-1),
+        )
+style bubble_narration_topleft_frame is bubble_speech_topleft_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        Transform("images/narration_bubble.png", zoom=-1),
+        )
+style bubble_narration_leftbase_frame is bubble_speech_leftbase_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        "narration_bubble_90",
+        )
+style bubble_narration_lefttop_frame is bubble_speech_lefttop_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        Transform("narration_bubble_90", yzoom=-1),
+        )
+style bubble_narration_righttop_frame is bubble_speech_righttop_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        Transform("narration_bubble_90", zoom=-1),
+        )
+style bubble_narration_rightbase_frame is bubble_speech_rightbase_frame:
+    padding (40, 20, 40, 20)
+    background Frame(
+        Transform("narration_bubble_90", xzoom=-1),
+        )
+
+style bubble_notail_baseright_frame is bubble_speech_baseright_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        "images/notail_bubble.png",
+        left=Borders(30, 30, 30, 30)
+        )
+style bubble_notail_baseleft_frame is bubble_speech_baseleft_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        Transform("images/notail_bubble.png", xzoom=-1),
+        left=Borders(30, 30, 30, 30)
+        )
+style bubble_notail_topright_frame is bubble_speech_topright_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        Transform("images/notail_bubble.png", yzoom=-1),
+        left=Borders(30, 30, 30, 30)
+        )
+style bubble_notail_topleft_frame is bubble_speech_topleft_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        Transform("images/notail_bubble.png", zoom=-1),
+        left=Borders(30, 30, 30, 30)
+        )
+style bubble_notail_leftbase_frame is bubble_speech_leftbase_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        "notail_bubble_90",
+        left=Borders(30, 30, 30, 30)
+        )
+style bubble_notail_lefttop_frame is bubble_speech_lefttop_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        Transform("notail_bubble_90", yzoom=-1),
+        left=Borders(30, 30, 30, 30)
+        )
+style bubble_notail_righttop_frame is bubble_speech_righttop_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        Transform("notail_bubble_90", zoom=-1),
+        left=Borders(30, 30, 30, 30)
+        )
+style bubble_notail_rightbase_frame is bubble_speech_rightbase_frame:
+    padding (30, 20, 30, 20)
+    background Frame(
+        Transform("notail_bubble_90", xzoom=-1),
+        left=Borders(30, 30, 30, 30)
+        )
 
                             ####################
                             #                  #
