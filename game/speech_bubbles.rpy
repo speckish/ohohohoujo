@@ -43,10 +43,10 @@ style bubble_speech_text:
     align (0,0) # also likely needed
 
     # just standard font specific stuff
-    color "#F00"
+    color "#000000"
     font "KOMIKAH_.ttf"
     kerning -1.0
-    size 24
+    size 22
 
 
 # A rotated version of the bubble image
@@ -762,6 +762,20 @@ define speech_bubble_k = Character(
     who_color="#888",
     what_style="bubble_speech_text")
 
+define narration = Character(
+    "",
+    screen="bubble_say",
+    what_color="#888",
+    what_style="bubble_speech_text",
+    show_type= "bubble_narration")
+
+define a = Character(
+    "Antigone",
+    screen="bubble_say",
+    who_color="#888",
+    what_color= "#ffffff",
+    what_style= "bubble_speech_text",
+    show_type = "bubble_spooky")
 
 
 label speech_bubble_example:
@@ -770,30 +784,10 @@ label speech_bubble_example:
 
     window hide
 
-    scene expression "#777"
+    #scene expression "#777"
 
-    speech_bubble_k """A few lines showing the
-    speech bubble system in action...""" (950, 224, "righttop")
+    speech_bubble_k """Basic speech bubble.""" (950, 224, "righttop")
 
-    speech_bubble_a "Style default (baseright)
-    \nYou can press Alt+C to show the used pos" (950, 224, show_xmax=500, what_color="#888")
-
-    speech_bubble_k "Style baseleft" (311, 220, "baseleft")
-
-    speech_bubble_a "Style leftbase" (311, 300, "leftbase")
-
-    speech_bubble_k "This one looks weirddd." (311, 500, "lefttop")
-
-    speech_bubble_a "Style topleft" (350, 300, "topleft")
-
-    speech_bubble_k "Valentines Day...No...not again." (900, 193, "topright")
-
-    speech_bubble_a "these are such a {b}PAAAAAAAINNNN{/b}" (743, 348, "righttop")
-
-    speech_bubble_k "And here's right base, for some reason." (845, 234, "rightbase")
-
-    speech_bubble_a "... and back to the game" (
-        640, 320, show_type="bubble_thought")
 
     # Testing different styles.
     speech_bubble_k """A few lines showing the
@@ -804,9 +798,11 @@ label speech_bubble_example:
 
     speech_bubble_a "Style leftbase" (311, 330, "leftbase", show_type="bubble_spooky", show_retain=1)
 
-    speech_bubble_k "This one looks weirddd." (311, 380, "lefttop", show_type="bubble_spooky", show_retain=0)
+    speech_bubble_k "{size=+10}HEY!" (311, 380, "lefttop", show_type="bubble_exclaim", show_retain=0)
 
-    window show
-    "But little did they know...."
+    narration"{i}But little did they know....{/i}" (390, 150, "baseright", show_type="bubble_narration",show_retain=1)
+    narration "{b}This system would change {i}everything!{/i}{/b}" (700,300, "lefttop", show_type="bubble_narration", show_retain=0)
+
+    a "More testing." (300,300, "topleft")
 
     return
