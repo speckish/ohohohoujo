@@ -625,7 +625,7 @@ init python:
 
             # You could amend to pass others as args too
 
-            kwargs['show_type'] = kwargs.get('show_type', "bubble_speech")
+            kwargs['show_type'] = kwargs.get('show_type', who.show_type)
             kwargs['show_xmax'] = kwargs.get('show_xmax', 320)
             #kwargs['show_xmin'] = kwargs.get('show_xmin', 0)
 
@@ -635,6 +635,12 @@ init python:
 
     config.say_arguments_callback = say_arguments_callback
 
+    class Character(ADVCharacter):
+        def __init__(self, name, show_type="bubble_speech", **kwargs):
+            self.show_type = show_type
+            super(Character, self).__init__(name,
+                                            show_type=show_type,
+                                            **kwargs)
 
 screen bubble_say(who, what, **kwargs):
 
@@ -776,7 +782,6 @@ define a = Character(
     what_color= "#ffffff",
     what_style= "bubble_speech_text",
     show_type = "bubble_spooky")
-
 
 label speech_bubble_example:
 
