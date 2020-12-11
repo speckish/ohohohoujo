@@ -58,10 +58,10 @@ define gui.interface_text_color = '#404040'
 define gui.text_font = "DejaVuSans.ttf"
 
 ## The font used for character names.
-define gui.name_text_font = "DejaVuSans.ttf"
+define gui.name_text_font = "C_BOX.TTF"
 
 ## The font used for out-of-game text.
-define gui.interface_text_font = "DejaVuSans.ttf"
+define gui.interface_text_font = "C_BOX.TTF"
 
 ## The size of normal dialogue text.
 define gui.text_size = 22
@@ -469,6 +469,3 @@ init python:
 
         gui.nvl_button_width = 1240
         gui.nvl_button_xpos = 20
-
-
-
