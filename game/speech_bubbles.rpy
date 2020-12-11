@@ -44,9 +44,9 @@ style bubble_speech_text:
 
     # just standard font specific stuff
     color "#000000"
-    font "KOMIKAH_.ttf"
+    font "KOMTXT__.ttf"
     kerning -1.0
-    size 22
+    size 24
 
 
 # A rotated version of the bubble image
