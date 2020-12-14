@@ -312,7 +312,7 @@ screen navigation():
         textbutton _("Load") action ShowMenu("load")
 
         textbutton _("Preferences") action ShowMenu("preferences")
-
+        textbutton _("Extras") action ShowMenu("extras")
         if _in_replay:
 
             textbutton _("End Replay") action EndReplay(confirm=True)
