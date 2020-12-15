@@ -5,6 +5,13 @@
 
 define e = Character("Eileen")
 
+#custom positions for displaying sprites
+transform nearleft:
+    xalign 0.25
+    yalign 1.0
+transform nearright:
+    xalign 0.75
+    yalign 1.0
 
 # The game starts here.
 
