@@ -4,6 +4,8 @@
 
 init offset = -1
 
+init -1 python:
+    persistent.textbox = persistent.textbox or "transparent"
 
 ################################################################################
 ## Styles
@@ -57,19 +59,24 @@ style scrollbar:
 
 style vscrollbar:
     xsize gui.scrollbar_size
-    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
-    thumb Frame("gui/scrollbar/vertical_[prefix_]thumb.png", gui.vscrollbar_borders, tile=gui.scrollbar_tile)
+    base_bar Frame("gui/scrollbar/vertical_[prefix_]bar.png", gui.scrollbar_borders, tile=gui.scrollbar_tile)
+    thumb_offset 15
+    thumb "gui/scrollbar/vertical_[prefix_]thumb.png"
+    top_gutter 25
+    bottom_gutter 25
 
 style slider:
     ysize gui.slider_size
     base_bar Frame("gui/slider/horizontal_[prefix_]bar.png", gui.slider_borders, tile=gui.slider_tile)
     thumb "gui/slider/horizontal_[prefix_]thumb.png"
+    thumb_offset 20
+    left_gutter 25
+    right_gutter 25
 
 style vslider:
     xsize gui.slider_size
     base_bar Frame("gui/slider/vertical_[prefix_]bar.png", gui.vslider_borders, tile=gui.slider_tile)
     thumb "gui/slider/vertical_[prefix_]thumb.png"
-
 
 style frame:
     padding gui.frame_borders.padding
@@ -94,6 +101,13 @@ style frame:
 ## and id "window" to apply style properties.
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#say
+
+layeredimage textbox:
+    align (0.5, 1.0)
+    if persistent.textbox == "opaque":
+        "gui/textbox_opaque.png"
+    else:
+        "gui/textbox_transparent.png"
 
 screen say(who, what):
     style_prefix "say"
@@ -135,8 +149,8 @@ style window:
     xfill True
     yalign gui.textbox_yalign
     ysize gui.textbox_height
-
-    background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
+    background "textbox"
+#     background Image("gui/textbox.png", xalign=0.5, yalign=1.0)
 
 style namebox:
     xpos gui.name_xpos
@@ -241,26 +255,20 @@ style choice_button_text is default:
 ## menus.
 
 screen quick_menu():
-
     ## Ensure this appears on top of other screens.
     zorder 100
-
     if quick_menu:
-
-        hbox:
-            style_prefix "quick"
-
-            xalign 0.5
-            yalign 1.0
-
-            textbutton _("Back") action Rollback()
-            textbutton _("History") action ShowMenu('history')
-            textbutton _("Skip") action Skip() alternate Skip(fast=True, confirm=True)
-            textbutton _("Auto") action Preference("auto-forward", "toggle")
-            textbutton _("Save") action ShowMenu('save')
-            textbutton _("Q.Save") action QuickSave()
-            textbutton _("Q.Load") action QuickLoad()
-            textbutton _("Prefs") action ShowMenu('preferences')
+        add "gui/quick_menu/bg.png" pos(25, 568)
+        # add "gui/quick_menu/quickmenu_hoverbuttons_placed.png"
+        imagebutton auto "gui/quick_menu/back_%s.png" alt _("Back") action Rollback() pos(138, 661)
+        imagebutton auto "gui/quick_menu/log_%s.png" alt _("Log") action ShowMenu('log') pos(207, 648)
+        imagebutton auto "gui/quick_menu/auto_%s.png" alt _("Auto") action Preference("auto-forward", "toggle") pos(313, 637)
+        imagebutton auto "gui/quick_menu/save_%s.png" alt _("Save") action ShowMenu('save') pos(411, 635)
+        imagebutton auto "gui/quick_menu/load_%s.png" alt _("Lave") action ShowMenu('load') pos(782, 635)
+        imagebutton auto "gui/quick_menu/quick_save_%s.png" alt _("Q.Save") action QuickSave() pos(937, 638)
+        imagebutton auto "gui/quick_menu/quick_load_%s.png" alt _("Q.Load") action QuickLoad() pos(1023, 648)
+        imagebutton auto "gui/quick_menu/skip_%s.png" alt _("Skip") action Skip() alternate Skip(fast=True, confirm=True) pos(1105, 661)
+        imagebutton auto "gui/quick_menu/preferences_%s.png" alt _("Prefs") action ShowMenu('preferences') focus_mask True
 
 
 ## This code ensures that the quick_menu screen is displayed in-game, whenever
@@ -345,6 +353,12 @@ style navigation_button:
 style navigation_button_text:
     properties gui.button_text_properties("navigation_button")
 
+style menu_paper_overlay_button_text is gui_button_text:
+    size 30
+    color "#AF2A50"
+    outlines [(6,"#8A123428",0,0), (4,"#8A1234A3",0,0), (2,"#8A1234",0,0)]
+    hover_color "#FEF960"
+    hover_outlines [(6,"#B07E0128",0,0), (4,"#B07E01A3",0,0), (2,"#AF7E01",0,0)]
 
 ## Main Menu screen ############################################################
 ##
@@ -352,32 +366,38 @@ style navigation_button_text:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#main-menu
 
+transform main_menu_bookmark:
+    on show:
+        align (0.5, 0.5) xpos 1.5
+        easein_cubic 0.5 xalign 0.5
+    on replace:
+        align (0.5, 0.5)
+
+transform main_menu_fade_in:
+    on show:
+        alpha 0.0
+        pause 0.75
+        ease_cubic 0.5 alpha 1.0
+    on replace:
+        alpha 1.0
+
 screen main_menu():
 
     ## This ensures that any other menu screen is replaced.
     tag menu
 
     style_prefix "main_menu"
-
-    add gui.main_menu_background
-
-    ## This empty frame darkens the main menu.
-    frame:
-        pass
-
-    ## The use statement includes another screen inside this one. The actual
-    ## contents of the main menu are in the navigation screen.
-    use navigation
-
-    if gui.show_name:
-
-        vbox:
-            text "[config.name!t]":
-                style "main_menu_title"
-
-            text "[config.version]":
-                style "main_menu_version"
-
+    add "#3A6730"
+    add gui.main_menu_background at main_menu_fade_in
+    add "gui/main_menu/bookmark.png" at main_menu_bookmark
+    fixed at main_menu_fade_in:
+        imagebutton auto "gui/main_menu/start_%s.png" alt _("Start") action Start() focus_mask True
+        if renpy.newest_slot() is not None:
+            imagebutton auto "gui/main_menu/continue_%s.png" alt _("Continue") action Function(renpy.load, renpy.newest_slot()) focus_mask True
+        imagebutton auto "gui/main_menu/load_%s.png" alt _("Load") action ShowMenu("load") focus_mask True
+        imagebutton auto "gui/main_menu/gallery_%s.png" alt _("Gallery") action ShowMenu("gallery") focus_mask True
+        imagebutton auto "gui/main_menu/music_box_%s.png" alt _("Music Box") action ShowMenu("music_box") focus_mask True
+        imagebutton auto "gui/main_menu/quit_%s.png" alt _("Quit") action Quit(confirm=False) focus_mask True
 
 style main_menu_frame is empty
 style main_menu_vbox is vbox
@@ -417,72 +437,93 @@ style main_menu_version:
 ## this screen is intended to be used with one or more children, which are
 ## transcluded (placed) inside it.
 
+image menu_bg = Movie(play="gui/game_menu.webm")
+
+transform menu_label_fade:
+    on show:
+        alpha 0.0
+        pause 1.0
+        linear 0.5 alpha 1.0
+    on replace:
+        alpha 1.0
+
+transform menu_paper_overlay:
+    on show:
+        rotate 6 pos (500, 600)
+        pause 0.45
+        parallel:
+            easein_back 0.5 rotate -6 xpos -80
+        parallel:
+            easein_quart 0.25 ypos 180
+            easeout_quart 0.25 ypos 195
+    on replace:
+        rotate -6 pos (-80, 195)
+    on hide:
+        rotate -6 pos (-80, 195)
+        pause 0.5
+
 screen game_menu(title, scroll=None, yinitial=0.0):
-
     style_prefix "game_menu"
-
+    zorder 1000000
     if main_menu:
         add gui.main_menu_background
-    else:
-        add gui.game_menu_background
-
-    frame:
-        style "game_menu_outer_frame"
-
-        hbox:
-
-            ## Reserve space for the navigation section.
-            frame:
-                style "game_menu_navigation_frame"
-
-            frame:
-                style "game_menu_content_frame"
-
-                if scroll == "viewport":
-
-                    viewport:
-                        yinitial yinitial
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-
-                        side_yfill True
-
-                        vbox:
-                            transclude
-
-                elif scroll == "vpgrid":
-
-                    vpgrid:
-                        cols 1
-                        yinitial yinitial
-
-                        scrollbars "vertical"
-                        mousewheel True
-                        draggable True
-                        pagekeys True
-
-                        side_yfill True
-
-                        transclude
-
-                else:
-
+    add gui.game_menu_background
+    add "menu_bg" align (0.5, 0.5)
+    frame background None pos(60, 60) xysize (1280-120, 720-260) padding (20, 20):
+        if scroll == "viewport":
+            viewport:
+                yinitial yinitial
+                scrollbars "vertical"
+                mousewheel True
+                draggable True
+                pagekeys True
+                side_yfill True
+                vbox:
                     transclude
+            null height 20
+        elif scroll == "vpgrid":
+            vpgrid:
+                cols 1
+                yinitial yinitial
+                scrollbars "vertical"
+                mousewheel True
+                draggable True
+                pagekeys True
+                side_yfill True
+                transclude
+        else:
+            transclude
 
-    use navigation
+    # textbutton _("Return"):
+    #     style "return_button"
 
-    textbutton _("Return"):
-        style "return_button"
-
-        action Return()
-
-    label title
+    #     action Return()
 
     if main_menu:
         key "game_menu" action ShowMenu("main_menu")
 
+    fixed at menu_paper_overlay:
+        style_prefix "menu_paper_overlay"
+        add "gui/menu_paper_overlay.png"
+        hbox xalign 0.65 ypos 8 spacing 16:
+            if not main_menu:
+                xoffset -10
+                textbutton _("save") action ShowMenu("save")
+            textbutton _("load") action ShowMenu("load")
+            textbutton _("log") action ShowMenu("log")
+            textbutton _("about") action ShowMenu("about")
+            textbutton _("preferences") action ShowMenu("preferences")
+            if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
+                textbutton _("help") action ShowMenu("help")
+            textbutton _("gallery") action ShowMenu("gallery")
+            textbutton _("music box") action ShowMenu("music_box")
+            if not main_menu:
+                textbutton _("main menu") action MainMenu()
+            if renpy.variant("pc"):
+                ## The quit button is banned on iOS and unnecessary on Android and
+                ## Web.
+                textbutton _("quit") action Quit(confirm=not main_menu)
+    label title anchor (1.0, 1.0) pos (1240, 720) text_size 128 at menu_label_fade
 
 style game_menu_outer_frame is empty
 style game_menu_navigation_frame is empty
@@ -492,7 +533,8 @@ style game_menu_side is gui_side
 style game_menu_scrollbar is gui_vscrollbar
 
 style game_menu_label is gui_label
-style game_menu_label_text is gui_label_text
+style game_menu_label_text is menu_paper_overlay_button_text:
+    font "christmas_winter.ttf"
 
 style return_button is navigation_button
 style return_button_text is navigation_button_text
@@ -550,11 +592,11 @@ screen about():
     ## This use statement includes the game_menu screen inside this one. The
     ## vbox child is then included inside the viewport inside the game_menu
     ## screen.
-    use game_menu(_("About"), scroll="viewport"):
+    use game_menu(_("about"), scroll="viewport"):
 
         style_prefix "about"
 
-        vbox:
+        vbox pos(120, 40):
 
             label "[config.name!t]"
             text _("Version [config.version!t]\n")
@@ -591,14 +633,14 @@ screen save():
 
     tag menu
 
-    use file_slots(_("Save"))
+    use file_slots(_("save"))
 
 
 screen load():
 
     tag menu
 
-    use file_slots(_("Load"))
+    use file_slots(_("load"))
 
 
 screen file_slots(title):
@@ -619,6 +661,7 @@ screen file_slots(title):
 
                 key_events True
                 xalign 0.5
+                ypos -35
                 action page_name_value.Toggle()
 
                 input:
@@ -630,9 +673,10 @@ screen file_slots(title):
                 style_prefix "slot"
 
                 xalign 0.5
-                yalign 0.5
+                yalign 0.35
 
-                spacing gui.slot_spacing
+                xspacing 10
+                yspacing -10
 
                 for i in range(gui.file_slot_cols * gui.file_slot_rows):
 
@@ -662,7 +706,7 @@ screen file_slots(title):
 
                 spacing gui.page_spacing
 
-                textbutton _("<") action FilePagePrevious()
+                textbutton _("<") action FilePagePrevious() text_font "DejaVuSans.ttf"
 
                 if config.has_autosave:
                     textbutton _("{#auto_page}A") action FilePage("auto")
@@ -674,7 +718,7 @@ screen file_slots(title):
                 for page in range(1, 10):
                     textbutton "[page]" action FilePage(page)
 
-                textbutton _(">") action FilePageNext()
+                textbutton _(">") action FilePageNext() text_font "DejaVuSans.ttf"
 
 
 style page_label is gui_label
@@ -708,6 +752,9 @@ style slot_button:
 style slot_button_text:
     properties gui.button_text_properties("slot_button")
 
+style gallery_button_text is gui_button_text:
+    properties gui.button_text_properties("slot_button")
+    xsize 120
 
 ## Preferences screen ##########################################################
 ##
@@ -717,92 +764,67 @@ style slot_button_text:
 ## https://www.renpy.org/doc/html/screen_special.html#preferences
 
 screen preferences():
-
     tag menu
-
-    use game_menu(_("Preferences"), scroll="viewport"):
-
-        vbox:
-
+    use game_menu(_("preferences")):
+        vbox pos(60, 0):
             hbox:
                 box_wrap True
-
                 if renpy.variant("pc") or renpy.variant("web"):
-
                     vbox:
                         style_prefix "radio"
                         label _("Display")
                         textbutton _("Window") action Preference("display", "window")
                         textbutton _("Fullscreen") action Preference("display", "fullscreen")
-
                 vbox:
                     style_prefix "radio"
                     label _("Rollback Side")
                     textbutton _("Disable") action Preference("rollback side", "disable")
                     textbutton _("Left") action Preference("rollback side", "left")
                     textbutton _("Right") action Preference("rollback side", "right")
-
                 vbox:
                     style_prefix "check"
                     label _("Skip")
                     textbutton _("Unseen Text") action Preference("skip", "toggle")
                     textbutton _("After Choices") action Preference("after choices", "toggle")
                     textbutton _("Transitions") action InvertSelected(Preference("transitions", "toggle"))
-
-                ## Additional vboxes of type "radio_pref" or "check_pref" can be
-                ## added here, to add additional creator-defined preferences.
-
-            null height (4 * gui.pref_spacing)
-
-            hbox:
-                style_prefix "slider"
-                box_wrap True
-
                 vbox:
-
-                    label _("Text Speed")
-
-                    bar value Preference("text speed")
-
-                    label _("Auto-Forward Time")
-
-                    bar value Preference("auto-forward time")
-
-                vbox:
-
+                    xsize 360
                     if config.has_music:
                         label _("Music Volume")
-
                         hbox:
                             bar value Preference("music volume")
-
                     if config.has_sound:
-
                         label _("Sound Volume")
-
                         hbox:
                             bar value Preference("sound volume")
-
                             if config.sample_sound:
                                 textbutton _("Test") action Play("sound", config.sample_sound)
-
-
                     if config.has_voice:
                         label _("Voice Volume")
-
                         hbox:
                             bar value Preference("voice volume")
-
                             if config.sample_voice:
                                 textbutton _("Test") action Play("voice", config.sample_voice)
-
                     if config.has_music or config.has_sound or config.has_voice:
                         null height gui.pref_spacing
-
                         textbutton _("Mute All"):
                             action Preference("all mute", "toggle")
                             style "mute_all_button"
-
+                            xoffset 5
+            null height (4 * gui.pref_spacing)
+            hbox:
+                style_prefix "slider"
+                box_wrap True
+                vbox:
+                    label _("Text Speed")
+                    bar value Preference("text speed")
+                    label _("Auto-Forward Time")
+                    bar value Preference("auto-forward time")
+                vbox:
+                    style_prefix "radio"
+                    label _("Textbox")
+                    textbutton _("Opaque") action SetField(persistent, "textbox", "opaque")
+                    textbutton _("Transparent") action SetField(persistent, "textbox", "transparent")
 
 style pref_label is gui_label
 style pref_label_text is gui_label_text
@@ -883,14 +905,14 @@ style slider_vbox:
 ##
 ## https://www.renpy.org/doc/html/history.html
 
-screen history():
+screen log():
 
     tag menu
 
     ## Avoid predicting this screen, as it can be very large.
     predict False
 
-    use game_menu(_("History"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0):
+    use game_menu(_("log"), scroll=("vpgrid" if gui.history_height else "viewport"), yinitial=1.0):
 
         style_prefix "history"
 
@@ -979,13 +1001,11 @@ screen help():
 
     default device = "keyboard"
 
-    use game_menu(_("Help"), scroll="viewport"):
+    use game_menu(_("help"), scroll="viewport"):
 
         style_prefix "help"
 
-        vbox:
-            spacing 15
-
+        vbox spacing 15 pos(120, 10):
             hbox:
 
                 textbutton _("Keyboard") action SetScreenVariable("device", "keyboard")
@@ -1249,6 +1269,8 @@ style skip_triangle:
     ## glyph in it.
     font "DejaVuSans.ttf"
 
+style paginator_button_text:
+    font "DejaVuSans.ttf"
 
 ## Notify screen ###############################################################
 ##

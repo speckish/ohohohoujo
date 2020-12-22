@@ -23,24 +23,24 @@ init python:
 ## The colors of text in the interface.
 
 ## An accent color used throughout the interface to label and highlight text.
-define gui.accent_color = '#0099ff'
+define gui.accent_color = '#8F3348'
 
 ## The color used for a text button when it is neither selected nor hovered.
-define gui.idle_color = '#aaaaaa'
+define gui.idle_color = '#63092E'
 
 ## The small color is used for small text, which needs to be brighter/darker to
 ## achieve the same effect.
 define gui.idle_small_color = '#888888'
 
 ## The color that is used for buttons and bars that are hovered.
-define gui.hover_color = '#0099ff'
+define gui.hover_color = '#D74A5B'
 
 ## The color used for a text button when it is selected but not focused. A
 ## button is selected if it is the current screen or preference value.
-define gui.selected_color = '#555555'
+define gui.selected_color = '#8F3348'
 
 ## The color used for a text button when it cannot be selected.
-define gui.insensitive_color = '#aaaaaa7f'
+define gui.insensitive_color = '#7C525D'
 
 ## Colors used for the portions of bars that are not filled in. These are not
 ## used directly, but are used when re-generating bar image files.
@@ -48,8 +48,8 @@ define gui.muted_color = '#66c1ff'
 define gui.hover_muted_color = '#99d6ff'
 
 ## The colors used for dialogue and menu choice text.
-define gui.text_color = '#404040'
-define gui.interface_text_color = '#404040'
+define gui.text_color = '#920A42'
+define gui.interface_text_color = '#920A42'
 
 
 ## Fonts and Font Sizes ########################################################
@@ -128,11 +128,11 @@ define gui.namebox_tile = False
 ## The placement of dialogue relative to the textbox. These can be a whole
 ## number of pixels relative to the left or top side of the textbox, or 0.5 to
 ## center.
-define gui.dialogue_xpos = 268
-define gui.dialogue_ypos = 50
+define gui.dialogue_xpos = 208
+define gui.dialogue_ypos = -60
 
 ## The maximum width of dialogue text, in pixels.
-define gui.dialogue_width = 744
+define gui.dialogue_width = 900
 
 ## The horizontal alignment of the dialogue text. This can be 0.0 for left-
 ## aligned, 0.5 for centered, and 1.0 for right-aligned.
@@ -178,9 +178,9 @@ define gui.button_text_xalign = 0.0
 ##
 ## These customizations are used by the default interface:
 
-define gui.radio_button_borders = Borders(18, 4, 4, 4)
+define gui.radio_button_borders = Borders(40, 5, 4, 10)
 
-define gui.check_button_borders = Borders(18, 4, 4, 4)
+define gui.check_button_borders = Borders(40, 5, 4, 10)
 
 define gui.confirm_button_text_xalign = 0.5
 
@@ -211,7 +211,7 @@ define gui.choice_button_text_size = gui.text_size
 define gui.choice_button_text_xalign = 0.5
 define gui.choice_button_text_idle_color = "#cccccc"
 define gui.choice_button_text_hover_color = "#ffffff"
-define gui.choice_button_text_insensitive_color = "#444444"
+define gui.choice_button_text_insensitive_color = "#7C525D"
 
 
 ## File Slot Buttons ###########################################################
@@ -269,9 +269,6 @@ define gui.pref_button_spacing = 0
 ## The spacing between file page buttons.
 define gui.page_spacing = 0
 
-## The spacing between file slots.
-define gui.slot_spacing = 10
-
 ## The position of the main menu text.
 define gui.main_menu_text_xalign = 1.0
 
@@ -307,8 +304,8 @@ define gui.frame_tile = False
 ## The height of horizontal bars, scrollbars, and sliders. The width of vertical
 ## bars, scrollbars, and sliders.
 define gui.bar_size = 25
-define gui.scrollbar_size = 12
-define gui.slider_size = 25
+define gui.scrollbar_size = 35
+define gui.slider_size = 35
 
 ## True if bar images should be tiled. False if they should be linearly scaled.
 define gui.bar_tile = False

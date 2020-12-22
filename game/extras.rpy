@@ -70,37 +70,24 @@ init -10 python:
             else:
                 return self
 
-screen extras():
-    tag menu
-    use game_menu(_("Extras")):
-        frame:
-            xysize (1.0, 1.0)
-            background None
-            vbox:
-                align (0.5, 0.5)
-                spacing 50
-                textbutton "Gallery" action ShowMenu("gallery")
-                textbutton "Music Room" action ShowMenu("music_room")
-
 screen gallery():
     tag menu
     default paginator = Paginator(cgs)
-    use game_menu(_("Extras")):
+    use game_menu(_("gallery")):
         frame:
             xysize (1.0, 1.0)
             background None
             vbox:
                 align (0.5, 0.5)
-                label "Gallery"
-                grid 2 3:
-                    spacing 20
+                grid 3 2 spacing 20:
+                    style_prefix "gallery_button"
                     for i in range(6):
                         if i < len(paginator.get_items()):
                             $ cg = paginator.get_items()[i]
-                            button:
+                            button ysize 200:
                                 if renpy.seen_image(cg['image']):
                                     action Show("cg_large", cg=cg['image'])
-                                vbox:
+                                vbox spacing 5:
                                     if renpy.seen_image(cg['image']):
                                         add cg['image'] at gallery_thumbnail
                                         text cg['name']
@@ -108,14 +95,13 @@ screen gallery():
                                         add "cg_locked" at gallery_thumbnail
                                         text "Locked"
                         else:
-                            null
-            hbox:
-                if paginator.has_prev():
-                    textbutton "Prev":
-                        action SetScreenVariable('paginator', paginator.prev())
-                if paginator.has_next():
-                    textbutton "Next":
-                        action SetScreenVariable('paginator', paginator.next())
+                            null width 128*2 height 72*2
+    if paginator.has_prev():
+        textbutton "Prev":
+            action SetScreenVariable('paginator', paginator.prev()) align (0.10, 0.5)
+    if paginator.has_next():
+        textbutton "Next":
+            action SetScreenVariable('paginator', paginator.next()) align (0.90, 0.5)
 
 
 transform gallery_thumbnail:
@@ -134,16 +120,15 @@ screen cg_large(cg):
     imagebutton idle cg at cg_fade:
         action Hide("cg_large")
 
-screen music_room():
+screen music_box():
     tag menu
     default paginator = Paginator(tracks)
-    use game_menu(_("Extras")):
+    use game_menu(_("music box")):
         frame:
             xysize (1.0, 1.0)
             background None
             vbox:
                 align (0.5, 0.5)
-                label "Music Room"
                 grid 2 3:
                     spacing 50
                     for i in range(6):
@@ -156,10 +141,10 @@ screen music_room():
                                 textbutton "Locked"
                         else:
                             null
-            hbox:
-                if paginator.has_prev():
-                    textbutton "Prev":
-                        action SetScreenVariable('paginator', paginator.prev())
-                if paginator.has_next():
-                    textbutton "Next":
-                        action SetScreenVariable('paginator', paginator.next())
+
+    if paginator.has_prev():
+        textbutton "Prev":
+            action SetScreenVariable('paginator', paginator.prev()) align (0.10, 0.5)
+    if paginator.has_next():
+        textbutton "Next":
+            action SetScreenVariable('paginator', paginator.next()) align (0.90, 0.5)
