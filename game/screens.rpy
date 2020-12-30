@@ -260,9 +260,14 @@ screen quick_menu():
     if quick_menu:
         add "gui/quick_menu/bg.png" pos(25, 568)
         # add "gui/quick_menu/quickmenu_hoverbuttons_placed.png"
-        imagebutton auto "gui/quick_menu/back_%s.png" alt _("Back") action Rollback() pos(138, 661)
+        imagebutton auto "gui/quick_menu/back_%s.png" alt _("Back") action Rollback() pos(138, 661) sensitive renpy.can_rollback()
         imagebutton auto "gui/quick_menu/log_%s.png" alt _("Log") action ShowMenu('log') pos(207, 648)
-        imagebutton auto "gui/quick_menu/auto_%s.png" alt _("Auto") action Preference("auto-forward", "toggle") pos(313, 637)
+        imagebutton alt _("Auto") action Preference("auto-forward", "toggle") pos(313, 637):
+                if preferences.afm_enable:
+                    idle "gui/quick_menu/auto_selected.png"
+                    hover "gui/quick_menu/auto_hover.png"
+                else:
+                    auto "gui/quick_menu/auto_%s.png"
         imagebutton auto "gui/quick_menu/save_%s.png" alt _("Save") action ShowMenu('save') pos(411, 635)
         imagebutton auto "gui/quick_menu/load_%s.png" alt _("Lave") action ShowMenu('load') pos(782, 635)
         imagebutton auto "gui/quick_menu/quick_save_%s.png" alt _("Q.Save") action QuickSave() pos(937, 638)
@@ -397,6 +402,7 @@ screen main_menu():
         imagebutton auto "gui/main_menu/load_%s.png" alt _("Load") action ShowMenu("load") focus_mask True
         imagebutton auto "gui/main_menu/gallery_%s.png" alt _("Gallery") action ShowMenu("gallery") focus_mask True
         imagebutton auto "gui/main_menu/music_box_%s.png" alt _("Music Box") action ShowMenu("music_box") focus_mask True
+        imagebutton auto "gui/main_menu/preferences_%s.png" alt _("Preferences") action ShowMenu("preferences") focus_mask True
         imagebutton auto "gui/main_menu/quit_%s.png" alt _("Quit") action Quit(confirm=False) focus_mask True
 
 style main_menu_frame is empty
@@ -469,6 +475,7 @@ screen game_menu(title, scroll=None, yinitial=0.0):
         add gui.main_menu_background
     add gui.game_menu_background
     add "menu_bg" align (0.5, 0.5)
+    imagebutton auto "gui/menu/return_%s.png" alt _("Return") action Return()
     frame background None pos(60, 60) xysize (1280-120, 720-260) padding (20, 20):
         if scroll == "viewport":
             viewport:
@@ -510,7 +517,8 @@ screen game_menu(title, scroll=None, yinitial=0.0):
                 xoffset -10
                 textbutton _("save") action ShowMenu("save")
             textbutton _("load") action ShowMenu("load")
-            textbutton _("log") action ShowMenu("log")
+            if not main_menu:
+                textbutton _("log") action ShowMenu("log")
             textbutton _("about") action ShowMenu("about")
             textbutton _("preferences") action ShowMenu("preferences")
             if renpy.variant("pc") or (renpy.variant("web") and not renpy.variant("mobile")):
@@ -1158,6 +1166,8 @@ style help_label_text:
 ##
 ## https://www.renpy.org/doc/html/screen_special.html#confirm
 
+image frame_bg = Movie(play="gui/frame.webm")
+
 screen confirm(message, yes_action, no_action):
 
     ## Ensure other screens do not get input while this screen is displayed.
@@ -1169,8 +1179,8 @@ screen confirm(message, yes_action, no_action):
 
     add "gui/overlay/confirm.png"
 
-    frame:
-
+    frame xysize(600,250):
+        add "frame_bg" align(0.5, 0.5)
         vbox:
             xalign .5
             yalign .5

@@ -282,7 +282,7 @@ define gui.main_menu_text_xalign = 1.0
 define gui.frame_borders = Borders(4, 4, 4, 4)
 
 ## The frame that is used as part of the confirm screen.
-define gui.confirm_frame_borders = Borders(40, 40, 40, 40)
+define gui.confirm_frame_borders = Borders(0, 0, 0, 0)
 
 ## The frame that is used as part of the skip screen.
 define gui.skip_frame_borders = Borders(16, 5, 50, 5)
