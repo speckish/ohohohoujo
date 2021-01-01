@@ -55,7 +55,7 @@ define gui.interface_text_color = '#920A42'
 ## Fonts and Font Sizes ########################################################
 
 ## The font used for in-game text.
-define gui.text_font = "DejaVuSans.ttf"
+define gui.text_font = "C059-Roman.ttf"
 
 ## The font used for character names.
 define gui.name_text_font = "C_BOX.TTF"
@@ -64,7 +64,7 @@ define gui.name_text_font = "C_BOX.TTF"
 define gui.interface_text_font = "C_BOX.TTF"
 
 ## The size of normal dialogue text.
-define gui.text_size = 22
+define gui.text_size = 25
 
 ## The size of character names.
 define gui.name_text_size = 30
@@ -80,6 +80,10 @@ define gui.notify_text_size = 16
 
 ## The size of the game's title.
 define gui.title_text_size = 50
+
+define gui.dialogue_text_outlines = [ (3, "#deebff", 0, 0) ]
+
+define gui.notify_text_outlines = [ (3, "#efeeee", 0, 0) ]
 
 
 ## Main and Game Menus #########################################################
@@ -129,7 +133,7 @@ define gui.namebox_tile = False
 ## number of pixels relative to the left or top side of the textbox, or 0.5 to
 ## center.
 define gui.dialogue_xpos = 208
-define gui.dialogue_ypos = -60
+define gui.dialogue_ypos = -50
 
 ## The maximum width of dialogue text, in pixels.
 define gui.dialogue_width = 900
