@@ -471,10 +471,10 @@ style bubble_narration_rightbase_frame is bubble_speech_rightbase_frame:
         )
 
 style bubble_notail_baseright_frame is bubble_speech_baseright_frame:
-    padding (30, 20, 30, 20)
+    padding (30, 35, 30, 20)
     background Frame(
         "images/notail_bubble.png",
-        left=Borders(30, 30, 30, 30)
+        left=Borders(30, 35, 30, 20)
         )
 style bubble_notail_baseleft_frame is bubble_speech_baseleft_frame:
     padding (30, 20, 30, 20)
@@ -755,23 +755,26 @@ init python:
 
 
 
-define speech_bubble_a = Character(
-    "Amber",
+define student = Character(
+    "Student",
     screen="bubble_say",
-    what_color="#282",
+    what_color="#000000",
     what_style="bubble_speech_text",
-    show_tail="leftbase")
+    show_tail="baseleft",
+    show_type = "bubble_notail")
 
-define speech_bubble_k = Character(
-    "Kaori",
+define prof = Character(
+    "Professor",
     screen="bubble_say",
-    who_color="#888",
-    what_style="bubble_speech_text")
+    who_color="#000000",
+    what_style="bubble_speech_text",
+    show_tail="baseleft",
+    show_type = "bubble_notail")
 
 define narration = Character(
     "",
     screen="bubble_say",
-    what_color="#888",
+    what_color="#000000",
     what_style="bubble_speech_text",
     show_type= "bubble_narration")
 
