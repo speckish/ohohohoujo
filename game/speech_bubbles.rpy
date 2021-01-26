@@ -753,7 +753,41 @@ init python:
 #
 
 
+define c = Character(
+    "Cerise",
+    screen="bubble_say",
+    what_color="#000000",
+    what_style="bubble_speech_text",
+    show_tail="leftbase")
 
+define e = Character(
+    "Eleanor",
+    screen="bubble_say",
+    what_color="#000000",
+    what_style="bubble_speech_text",
+    show_tail="leftbase")
+
+define f = Character(
+    "Fiona",
+    screen="bubble_say",
+    what_color="#000000",
+    what_style="bubble_speech_text",
+    show_tail="leftbase")
+
+define s = Character(
+    "Sofia",
+    screen="bubble_say",
+    what_color="#000000",
+    what_style="bubble_speech_text",
+    show_tail="leftbase")
+
+define a = Character(
+    "Antigone",
+    screen="bubble_say",
+    who_color="#888",
+    what_color= "#ffffff",
+    what_style= "bubble_speech_text",
+    show_type = "bubble_spooky")
 
 define student = Character(
     "Student",
@@ -778,13 +812,7 @@ define narration = Character(
     what_style="bubble_speech_text",
     show_type= "bubble_narration")
 
-define a = Character(
-    "Antigone",
-    screen="bubble_say",
-    who_color="#888",
-    what_color= "#ffffff",
-    what_style= "bubble_speech_text",
-    show_type = "bubble_spooky")
+
 
 label speech_bubble_example:
 
